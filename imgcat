@@ -2,6 +2,10 @@
 
 # From: https://github.com/gnachman/iTerm2/blob/master/tests/imgcat
 
+function show_version() {
+    echo "v1.0" 1>& 2
+}
+
 # tmux requires unrecognized OSC sequences to be wrapped with DCS tmux;
 # <sequence> ST, and for all ESCs in <sequence> to be replaced with ESC ESC. It
 # only accepts ESC backslash for ST.
@@ -60,8 +64,12 @@ function error() {
 }
 
 function show_help() {
-    echo "Usage: imgcat [-p] filename ..." 1>& 2
+    echo "Usage: imgcat [-p] [-v] [-h] filename ..." 1>& 2
     echo "   or: cat filename | imgcat" 1>& 2
+    echo 1>& 2
+    echo "  -p | --print    print filename under image" 1>& 2
+    echo "  -v | --version  print version" 1>& 2
+    echo "  -h | --help     print help" 1>& 2
 }
 
 ## Main
@@ -81,6 +89,10 @@ fi
 # Look for command line flags.
 while [ $# -gt 0 ]; do
     case "$1" in
+    -v|--v|--version)
+        show_version
+        exit
+        ;;
     -h|--h|--help)
         show_help
         exit
